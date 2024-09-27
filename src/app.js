@@ -19,6 +19,8 @@ server.get('/Produto', async (req, res) => {
   }
 });
 
-server.listen(process.env.PORTA, () => {
-  console.log(`API SUBIU na porta`, process.env.PORTA);
+const PORTA = process.env.PORTA
+
+server.listen(PORTA, () => {
+  console.log(`API SUBIU na porta ${process.env.PORTA}`);
 });
