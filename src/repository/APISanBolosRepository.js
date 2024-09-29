@@ -47,7 +47,6 @@ export async function alterarProduto(id, produto) {
     where id_produto = ?;
   `;
   let resposta = await con.query(comando, [
-    produto.id,
     produto.nome,
     produto.descrição,
     produto.preço,
