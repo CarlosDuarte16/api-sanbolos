@@ -57,6 +57,22 @@ export async function consultarProduto() {
   return registro;
 }
 
+export async function consultarPerfil() {
+  const comando = `
+    select id_administrador   as id,
+          nm_administrador    as nome,
+          ds_senha            as senha,
+          ds_email            as email,
+          nr_telefone         as telelfone
+    from tb_administrador;
+  `;
+  let resposta = await con.query(comando);
+  let registro = resposta[0];
+
+  return registro;
+}
+
+
 export async function alterarProduto(id, produto) {
   const comando = `
     update tb_produto
@@ -79,6 +95,28 @@ export async function alterarProduto(id, produto) {
 
   return info.affectedRows;
 
+};
+
+
+export async function alterarPerfil(id, perfil) {
+  const comando = `
+    update tb_administrador
+    set nm_administrador = ?,
+        ds_senha = ?,
+        ds_email = ?,
+        nr_telefone = ?
+    where id_administrador = ?;
+  `;
+  let resposta = await con.query(comando, [
+    perfil.nome,
+    perfil.senha,
+    perfil.email,
+    perfil.telefone,
+    id,
+  ]);
+  let info = resposta[0];
+
+  return info.affectedRows;
 };
 
 export async function removerProduto(id) {
