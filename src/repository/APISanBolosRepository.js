@@ -20,6 +20,27 @@ export async function inserirProduto(produto) {
   return info.insertId;
 }
 
+export async function inserirPerfil(perfil) {
+  const comando = `
+    INSERT INTO tb_administrador (id_administrador, nm_administrador, ds_senha, ds_email, nr_telefone)
+    VALUES (?, ?, ?, ?, ?)
+  `;
+
+  let resposta = await con.query(comando, [
+    perfil.id,
+    perfil.nome,
+    perfil.senha,
+    perfil.email,
+    perfil.telefone
+  ]);
+
+  let info = resposta[0];
+
+  return info.insertId;
+}
+
+
+
 export async function consultarProduto() {
   const comando = `
     select id_produto         as id,

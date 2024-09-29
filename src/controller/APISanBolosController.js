@@ -17,6 +17,21 @@ endpoint.post('/inserirProduto/', async (req, resp) => {
   }
 });
 
+endpoint.post('/inserirPerfil/', async (req, resp) => {
+  try {
+    let perfil = req.body;
+    let id = await db.inserirPerfil(perfil);
+    resp.send({
+      novoId: id
+    });
+  } catch (err) {
+    resp.status(400).send({
+      erro: err.message
+    });
+  }
+});
+
+
 endpoint.get('/consultarProduto/', async (req, resp) => {
   try {
     let registros = await db.consultarProduto();
