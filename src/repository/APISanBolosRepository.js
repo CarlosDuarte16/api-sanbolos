@@ -1,5 +1,34 @@
 import con from './connection.js';
 
+
+export async function inserirUsuario(pessoa) {
+  const comando = `
+      insert into tb_administrador (nm_administrador, ds_senha, ds_email) 
+                values (?, ?, ?)
+  `;
+  
+  let resposta = await con.query(comando, [pessoa.nome, pessoa.senha, pessoa.email])
+  let info = resposta[0];
+  
+  return info.insertId;
+}
+
+export async function validarUsuario(pessoa) {
+  const comando = `
+      select 
+          id_administrador    id,
+          nm_administrador    nome
+      from tb_administrador 
+      where 
+          ds_email = ?
+          and ds_senha = ?
+  `;
+  
+  let registros = await con.query(comando, [ pessoa.senha, pessoa.email])
+  return registros[0][0];
+}
+
+
 export async function inserirProduto(produto) {
   const comando = `
     INSERT INTO tb_produto (id_produto, nm_produto, ds_descrição, vl_preço, img_produto, bl_disponibilidade)
@@ -20,26 +49,24 @@ export async function inserirProduto(produto) {
   return info.insertId;
 }
 
-export async function inserirPerfil(perfil) {
+export async function inserirCliente(cliente) {
   const comando = `
-    INSERT INTO tb_administrador (id_administrador, nm_administrador, ds_senha, ds_email, nr_telefone)
+    INSERT INTO tb_cliente (id_cliente, nm_cliente, ds_email, ds_endereço, nr_telefone)
     VALUES (?, ?, ?, ?, ?)
   `;
 
   let resposta = await con.query(comando, [
-    perfil.id,
-    perfil.nome,
-    perfil.senha,
-    perfil.email,
-    perfil.telefone
+    cliente.id,
+    cliente.nome,
+    cliente.email,
+    cliente.endereço,
+    cliente.telefone
   ]);
 
   let info = resposta[0];
 
   return info.insertId;
 }
-
-
 
 export async function consultarProduto() {
   const comando = `
@@ -57,14 +84,14 @@ export async function consultarProduto() {
   return registro;
 }
 
-export async function consultarPerfil() {
+export async function consultarCliente() {
   const comando = `
-    select id_administrador   as id,
-          nm_administrador    as nome,
-          ds_senha            as senha,
+    select id_cliente         as id,
+          nm_clente           as nome,
           ds_email            as email,
-          nr_telefone         as telelfone
-    from tb_administrador;
+          ds_endereço         as endereço,
+          nr_telefone         as telefone
+    from tb_cliente;
   `;
   let resposta = await con.query(comando);
   let registro = resposta[0];
@@ -97,27 +124,6 @@ export async function alterarProduto(id, produto) {
 
 };
 
-
-export async function alterarPerfil(id, perfil) {
-  const comando = `
-    update tb_administrador
-    set nm_administrador = ?,
-        ds_senha = ?,
-        ds_email = ?,
-        nr_telefone = ?
-    where id_administrador = ?;
-  `;
-  let resposta = await con.query(comando, [
-    perfil.nome,
-    perfil.senha,
-    perfil.email,
-    perfil.telefone,
-    id,
-  ]);
-  let info = resposta[0];
-
-  return info.affectedRows;
-};
 
 export async function removerProduto(id) {
   const comando = `
