@@ -20,13 +20,14 @@ export async function validarUsuario(pessoa) {
           nm_administrador    nome
       from tb_administrador 
       where 
-          ds_email = ?
+          nm_administrador = ?
           and ds_senha = ?
   `;
   
-  let registros = await con.query(comando, [ pessoa.senha, pessoa.email])
+  let registros = await con.query(comando, [pessoa.nome, pessoa.senha]);
   return registros[0][0];
 }
+
 
 
 export async function inserirProduto(produto) {
