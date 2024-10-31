@@ -1,6 +1,21 @@
 import con from './connection.js';
 
 
+export async function consultarUsuario() {
+  const comando = `
+    select id_administrador   as id,
+          nm_administrador    as nome,
+          ds_senha            as senha,
+          ds_email            as email
+    from tb_administrador;
+  `;
+  let resposta = await con.query(comando);
+  let registro = resposta[0];
+
+  return registro;
+}
+
+
 export async function inserirUsuario(pessoa) {
   const comando = `
       insert into tb_administrador (nm_administrador, ds_senha, ds_email) 
@@ -37,7 +52,7 @@ export async function inserirProduto(produto) {
   `;
 
   let resposta = await con.query(comando, [
-    produto.id,
+    produto.id || null,
     produto.nome,
     produto.descrição,
     produto.preço,
@@ -83,6 +98,24 @@ export async function consultarProduto() {
   let registro = resposta[0];
 
   return registro;
+}
+
+export async function consultarProdutoPorId(id) {
+  const comando = `
+    SELECT id_produto         AS id,
+           nm_produto          AS nome,
+           ds_descrição        AS descrição,
+           vl_preço            AS valor,
+           img_produto         AS image,
+           bl_disponibilidade  AS disponivel
+    FROM tb_produto
+    WHERE id_produto = ?;  -- Filtra pelo ID do produto
+  `;
+  
+  let resposta = await con.query(comando, [id]);
+  let produto = resposta[0][0]; 
+
+  return produto; 
 }
 
 export async function consultarCliente() {

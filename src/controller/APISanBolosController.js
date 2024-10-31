@@ -1,7 +1,5 @@
 import * as db from '../repository/APISanBolosRepository.js';
-
 import { gerarToken } from '../utils/jwt.js';
-
 import { Router } from 'express';
 const endpoint = Router();
 
@@ -45,10 +43,23 @@ endpoint.post('/usuario/', async (req, resp) => {
   }
 })
 
+endpoint.get('/consultarUsuario/',  async (req, resp) => {
+  try {
+    let registros = await db.consultarUsuario();
+    resp.send(registros);
+  }
+  catch (err) {
+    resp.status(400).send({
+      erro: err.message
+    })
+  }
+});
 
 endpoint.post('/inserirProduto/', async (req, resp) => {
   try {
+
     let produto = req.body;
+
     let id = await db.inserirProduto(produto);
     resp.send({
       novoId: id
@@ -86,6 +97,21 @@ endpoint.get('/consultarProduto/',  async (req, resp) => {
     })
   }
 });
+
+// Exemplo de endpoint no seu controlador
+endpoint.get('/consultarProduto/:id', async (req, resp) => {
+  try {
+    const { id } = req.params;
+    const produto = await db.consultarProdutoPorId(id); // Certifique-se de que esta função existe
+    if (!produto) {
+      return resp.status(404).send({ erro: 'Produto não encontrado' });
+    }
+    resp.send(produto);
+  } catch (err) {
+    resp.status(500).send({ erro: err.message });
+  }
+});
+
 
 endpoint.get('/consultarCliente/',  async (req, resp) => {
   try {
