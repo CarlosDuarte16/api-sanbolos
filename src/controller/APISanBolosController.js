@@ -98,11 +98,10 @@ endpoint.get('/consultarProduto/',  async (req, resp) => {
   }
 });
 
-// Exemplo de endpoint no seu controlador
 endpoint.get('/consultarProduto/:id', async (req, resp) => {
   try {
     const { id } = req.params;
-    const produto = await db.consultarProdutoPorId(id); // Certifique-se de que esta função existe
+    const produto = await db.consultarProdutoPorId(id);
     if (!produto) {
       return resp.status(404).send({ erro: 'Produto não encontrado' });
     }
