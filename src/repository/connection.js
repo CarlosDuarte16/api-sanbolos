@@ -6,7 +6,7 @@ const con =  await mysql.createConnection({
     database: process.env.MYSQL_DB,
     password: process.env.MYSQL_PWD,
     user: process.env.MYSQL_USER,
-    port: process.env.MYSQL_PORT
+    port: process.env.PORTA
 })
 console.log('conectado') 
 
