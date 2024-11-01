@@ -10,7 +10,7 @@ adicionarRotas(app)
 
 
 
-const porta = process.env.PORTA || 3000
+const porta = process.env.PORTA || 30000
 app.listen(porta, ()=>{
     console.log('aberto na porta ' + process.env.PORTA)
 })
