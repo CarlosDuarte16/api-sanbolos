@@ -21,7 +21,7 @@ server.get('/Produto', async (req, res) => {
 });
 
 const PORTA = process.env.PORTA;
-
+console.log(PORTA);
 
 server.listen(PORTA, () => {
   console.log(`API SUBIU na porta ${PORTA}`);
