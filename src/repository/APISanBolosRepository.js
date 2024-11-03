@@ -115,6 +115,9 @@ export async function consultarProdutoPorId(id) {
   let resposta = await con.query(comando, [id]);
   let produto = resposta[0][0]; 
 
+  if (produto.image != null) {
+    produto.image = produto.image.toString();
+}
   return produto; 
 }
 
