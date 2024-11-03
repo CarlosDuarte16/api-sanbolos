@@ -95,13 +95,13 @@ export async function consultarProduto() {
     from tb_produto;
   `;
   let resposta = await con.query(comando);
-  let registro = resposta[0];
+  let produto = resposta[0];
 
   if (produto.image != null) {
     produto.image = produto.image.toString();
   }
 
-  return registro;
+  return produto;
 }
 
 export async function consultarProdutoPorId(id) {
@@ -118,10 +118,6 @@ export async function consultarProdutoPorId(id) {
 
   let resposta = await con.query(comando, [id]);
   let produto = resposta[0][0];
-
-  if (produto.image != null) {
-    produto.image = produto.image.toString();
-  }
 
   return produto;
 }

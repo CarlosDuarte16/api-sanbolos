@@ -98,7 +98,7 @@ endpoint.get('/consultarProduto/',  async (req, resp) => {
   }
 });
 
-endpoint.get('/consultarProduto/:id', async (req, resp) => {
+endpoint.get('/consultarProdutos/:id', async (req, resp) => {
   try {
     const { id } = req.params;
     const produto = await db.consultarProdutoPorId(id);
