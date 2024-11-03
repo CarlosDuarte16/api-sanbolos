@@ -21,10 +21,10 @@ export async function inserirUsuario(pessoa) {
       insert into tb_administrador (nm_administrador, ds_senha, ds_email) 
                 values (?, ?, ?)
   `;
-  
+
   let resposta = await con.query(comando, [pessoa.nome, pessoa.senha, pessoa.email])
   let info = resposta[0];
-  
+
   return info.insertId;
 }
 
@@ -38,7 +38,7 @@ export async function validarUsuario(pessoa) {
           nm_administrador = ?
           and ds_senha = ?
   `;
-  
+
   let registros = await con.query(comando, [pessoa.nome, pessoa.senha]);
   return registros[0][0];
 }
@@ -97,6 +97,10 @@ export async function consultarProduto() {
   let resposta = await con.query(comando);
   let registro = resposta[0];
 
+  if (produto.image != null) {
+    produto.image = produto.image.toString();
+  }
+
   return registro;
 }
 
@@ -111,14 +115,15 @@ export async function consultarProdutoPorId(id) {
     FROM tb_produto
     WHERE id_produto = ?;  -- Filtra pelo ID do produto
   `;
-  
+
   let resposta = await con.query(comando, [id]);
-  let produto = resposta[0][0]; 
+  let produto = resposta[0][0];
 
   if (produto.image != null) {
     produto.image = produto.image.toString();
-}
-  return produto; 
+  }
+
+  return produto;
 }
 
 export async function consultarCliente() {
