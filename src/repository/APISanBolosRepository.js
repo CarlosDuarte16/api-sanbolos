@@ -47,7 +47,7 @@ export async function validarUsuario(pessoa) {
 
 export async function inserirProduto(produto) {
   const comando = `
-    INSERT INTO tb_produto (id_produto, nm_produto, ds_descrição, vl_preço, img_produto, bl_disponibilidade)
+    INSERT INTO tb_produto (id_produto, nm_produto, ds_descrição, vl_preço, img_produto)
     VALUES (?, ?, ?, ?, ?, ?)
   `;
 
@@ -56,8 +56,7 @@ export async function inserirProduto(produto) {
     produto.nome,
     produto.descrição,
     produto.preço,
-    produto.image,
-    produto.disponibilidade
+    produto.image
   ]);
 
   let info = resposta[0];
@@ -67,7 +66,7 @@ export async function inserirProduto(produto) {
 
 export async function inserirCliente(cliente) {
   const comando = `
-    INSERT INTO tb_cliente (id_cliente, nm_cliente, ds_email, ds_endereço, nr_telefone)
+    INSERT INTO tb_cliente (id_cliente, nm_cliente, ds_email, ds_endereço)
     VALUES (?, ?, ?, ?, ?)
   `;
 
@@ -75,8 +74,7 @@ export async function inserirCliente(cliente) {
     cliente.id,
     cliente.nome,
     cliente.email,
-    cliente.endereço,
-    cliente.telefone
+    cliente.endereço
   ]);
 
   let info = resposta[0];
@@ -90,8 +88,7 @@ export async function consultarProduto() {
           nm_produto          as nome,
           ds_descrição        as descrição,
           vl_preço            as valor,
-          img_produto         as image,
-          bl_disponibilidade  as disponivel
+          img_produto         as image
     from tb_produto;
   `;
   let resposta = await con.query(comando);
@@ -111,8 +108,7 @@ export async function consultarProdutoPorId(id) {
            nm_produto          AS nome,
            ds_descrição        AS descrição,
            vl_preço            AS valor,
-           img_produto         AS image,
-           bl_disponibilidade  AS disponivel
+           img_produto         AS image
     FROM tb_produto
     WHERE id_produto = ?;  -- Filtra pelo ID do produto
   `;
@@ -126,10 +122,8 @@ export async function consultarProdutoPorId(id) {
 export async function consultarCliente() {
   const comando = `
     select id_cliente         as id,
-          nm_clente           as nome,
+          nm_cliente           as nome,
           ds_email            as email,
-          ds_endereço         as endereço,
-          nr_telefone         as telefone
     from tb_cliente;
   `;
   let resposta = await con.query(comando);
@@ -145,8 +139,7 @@ export async function alterarProduto(id, produto) {
     set nm_produto = ?,
         ds_descrição = ?,
         vl_preço = ?,
-        img_produto = ?,
-        bl_disponibilidade = ?
+        img_produto = ?
     where id_produto = ?;
   `;
   let resposta = await con.query(comando, [
@@ -154,7 +147,6 @@ export async function alterarProduto(id, produto) {
     produto.descrição,
     produto.preço,
     produto.image,
-    produto.disponibilidade,
     id,
   ]);
   let info = resposta[0];
