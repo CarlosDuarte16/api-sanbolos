@@ -48,7 +48,7 @@ export async function validarUsuario(pessoa) {
 export async function inserirProduto(produto) {
   const comando = `
     INSERT INTO tb_produto (id_produto, nm_produto, ds_descrição, vl_preço, img_produto)
-    VALUES (?, ?, ?, ?, ?, ?)
+    VALUES (?, ?, ?, ?, ?)
   `;
 
   let resposta = await con.query(comando, [
@@ -67,7 +67,7 @@ export async function inserirProduto(produto) {
 export async function inserirCliente(cliente) {
   const comando = `
     INSERT INTO tb_cliente (id_cliente, nm_cliente, ds_email, ds_endereço)
-    VALUES (?, ?, ?, ?, ?)
+    VALUES (?, ?, ?, ?)
   `;
 
   let resposta = await con.query(comando, [
@@ -122,7 +122,7 @@ export async function consultarProdutoPorId(id) {
 export async function consultarCliente() {
   const comando = `
     select id_cliente         as id,
-          nm_cliente           as nome,
+          nm_cliente          as nome,
           ds_email            as email,
     from tb_cliente;
   `;
